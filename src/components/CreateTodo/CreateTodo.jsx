@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export default function CreateTodo() {
-  const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState({
     name: "",
     description: "",
@@ -33,8 +32,7 @@ export default function CreateTodo() {
   
       const data = await response.json();
       console.log(data);
-
-      setTodos([...todos, response.data]);
+      
       setNewTodo({
         name: "",
         description: "",
