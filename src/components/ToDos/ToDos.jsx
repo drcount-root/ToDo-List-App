@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ToDo from "../ToDo/ToDo";
 
 export default function ToDos() {
   const [todos, setTodos] = useState([]);
@@ -9,9 +10,9 @@ export default function ToDos() {
   const rendered = useRef(false);
   const tokenId = localStorage.getItem("tokenId");
 
-  const handleCheckboxChange = () => {
+  // const handleCheckboxChange = () => {
     // setCompleted(!completed);
-  };
+  // };
 
   useEffect(() => {
     async function getAllTodos(tokenId) {
@@ -50,24 +51,20 @@ export default function ToDos() {
 
   return (
     <>
+      <button><Link to='/new'>Add Todo</Link></button>
       <div>
         {todos.map((todo) => {
           return (
             <div key={todo._id}>
-              <input
-                type="checkbox"
-                checked={todo.status}
-                onChange={handleCheckboxChange}
+              <ToDo
+                id={todo._id}
+                name={todo.name}
+                description={todo.description}
+                status={todo.status}
+                createdAt={todo.createdAt}
+                createdBy={todo.createdBy}
+                updatedAt={todo.updatedAt}
               />
-              <h3>
-                <Link to="/tododetails">{todo.name}</Link>
-              </h3>
-              <p>{todo.description}</p>
-              <p>{todo.status}</p>
-              <p>{todo.createdBy}</p>
-              <p>{todo.createdAt}</p>
-              <p>{todo.updatedAt}</p>
-              <p>{todo.__v}</p>
             </div>
           );
         })}

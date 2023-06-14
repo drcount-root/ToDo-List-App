@@ -1,10 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// Style Import
 import "./App.css";
 
-// Importing Components
 import WelcomePage from "./components/WelcomePage/WelcomePage";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
@@ -12,8 +10,8 @@ import LoginErrorPage from "./components/ErrorPages/LoginErrorPage";
 import CredentialsRulesets from "./components/CredentialsRulesets/CredentialsRulesets";
 import ToDos from "./components/ToDos/ToDos";
 import ToDoDetails from "./components/ToDoDetails/ToDoDetails";
+import CreateTodo from "./components/CreateTodo/CreateTodo";
 
-// Creating router
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,17 +32,17 @@ const router = createBrowserRouter([
     element: <ToDos />,
   },
   {
-    path: "/tododetails",
-    element: <ToDoDetails />,
+    path: "/todo/:id",
+    element: <ToDoDetails/>,
+  },
+  {
+    path: "/new",
+    element: <CreateTodo/>,
   },
   {
     path: "*",
     element: <WelcomePage />,
   },
-  // {
-  //   path: "contacts/:contactId",
-  //   element: <Contact />,
-  // },
 ]);
 
 const App = () => {
