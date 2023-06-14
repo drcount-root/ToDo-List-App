@@ -1,0 +1,43 @@
+.main_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+  }
+  
+  .welcome_container {
+    background-color: rgb(226, 235, 142);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 25%;
+    border-radius: 7px;
+  }
+  
+  .welcome_heading {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .welcome_buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  @media (max-width: 768px) {
+    /* Styles for mobile screens */
+    .main_container {
+      margin-top: 30%;
+    }
+  
+    .welcome_container {
+      width: 80%;
+      padding: 20px;
+    }
+    
+    .welcome_heading {
+      font-size: 20px;
+    }
+  }
+  

@@ -43,6 +43,15 @@ const SignUp = () => {
     }
   };
 
+  const linkStyle = {
+    margin: "1rem",
+    textDecoration: "none",
+    color: "white",
+    cursor: "pointer",padding: "10px 15px",
+    backgroundColor: "black",
+    borderRadius: "7px"
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -64,10 +73,10 @@ const SignUp = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Signup</button>
+        <button type="submit" style={linkStyle}>Signup</button>
       </form>
       <div>Already have an account?</div>
-      <Link to="/login">Login</Link>
+      <Link to="/login" style={linkStyle}>Login</Link>
     </>
   );
 };

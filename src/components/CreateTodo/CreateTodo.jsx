@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTodo() {
   const [newTodo, setNewTodo] = useState({
@@ -7,6 +8,7 @@ export default function CreateTodo() {
     status: false,
   });
   const tokenId = localStorage.getItem("tokenId");
+  const navigate = useNavigate();
 
   const addTodo = async () => {
     try {
@@ -28,6 +30,12 @@ export default function CreateTodo() {
 
       if (!response.ok) {
         throw new Error('Failed to add todo');
+      }
+
+      if (response.ok) {
+        navigate("/todos");
+      } else {
+        throw new Error("Failed to delete todo");
       }
   
       const data = await response.json();

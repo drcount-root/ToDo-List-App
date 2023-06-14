@@ -11,6 +11,7 @@ import CredentialsRulesets from "./components/CredentialsRulesets/CredentialsRul
 import ToDos from "./components/ToDos/ToDos";
 import ToDoDetails from "./components/ToDoDetails/ToDoDetails";
 import CreateTodo from "./components/CreateTodo/CreateTodo";
+import EditTodo from "./components/EditTodo/EditTodo";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +34,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/todo/:id",
-    element: <ToDoDetails/>,
+    element: <ToDoDetails />,
   },
   {
-    path: "/new",
-    element: <CreateTodo/>,
+    path: "/todos/create",
+    element: <CreateTodo />,
+  },
+  {
+    path: "/todo/edit/:id",
+    element: <EditTodo />,
   },
   {
     path: "*",
