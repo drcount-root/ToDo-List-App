@@ -60,7 +60,6 @@ export default function ToDos() {
       </Link>
       <div>
         {" "}
-        {/* Add a container class */}
         {todos.map((todo) => {
           return (
             <div key={todo._id}>

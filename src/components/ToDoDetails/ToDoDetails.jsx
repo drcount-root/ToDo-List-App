@@ -1,26 +1,30 @@
-// import React from 'react'
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function ToDoDetails() {
   const rendered = useRef(false);
-  const todoId = useParams().id;
-  console.log(todoId);
+  const params = useParams();
+  const todoId = params.id;
+  // console.log(todoId);
   const navigate = useNavigate();
   const tokenId = localStorage.getItem("tokenId");
+  const [loading, setLoading] = useState(true);
 
-  const [todoheading, setTodoheading] = useState('');
-  const [tododescription, setTododescription] = useState('');
-  const [todostatus, setTodostatus] = useState(false);
-  const [createdAt, setCreatedAt] = useState('');
-  const [createdBy, setCreatedBy] = useState('');
-  const [updatedAt, setUpdatedAt] = useState('');
+  const [todo, setTodo] = useState({
+    todoheading: "",
+    tododescription: "",
+    todostatus: "",
+    createdAt: "",
+    createdBy: "",
+    updatedAt: "",
+  });
 
   useEffect(() => {
     const getTodoDetails = async (tokenId) => {
       const response = await fetch(
-        `https://todos-api-aeaf.onrender.com/api/v1/todo/getById?id=${todoId}`, {
+        `https://todos-api-aeaf.onrender.com/api/v1/todo/getById?id=${todoId}`,
+        {
           method: "GET",
           headers: {
             Authorization: "Bearer " + tokenId,
@@ -32,13 +36,16 @@ export default function ToDoDetails() {
         }
       );
       const body = await response.json();
-      console.log(body);
-      setTodoheading(body.name);
-      setTododescription(body.description);
-      setTodostatus(body.status);
-      setCreatedAt(body.createdAt)
-      setCreatedBy(body.createdBy)
-      setUpdatedAt(body.updatedAt)
+      // console.log(body);
+      setTodo({
+        todoheading: body.name,
+        tododescription: body.description,
+        todostatus: body.status,
+        createdAt: body.createdAt,
+        createdBy: body.createdBy,
+        updatedAt: body.updatedAt,
+      });
+      setLoading(false);
     };
 
     if (!rendered.current && tokenId) {
@@ -50,9 +57,14 @@ export default function ToDoDetails() {
     };
   }, []);
 
-  /* new code
-  */
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   const handleEdit = () => {
+    localStorage.setItem("heading", todo.todoheading);
+    localStorage.setItem("description", todo.tododescription);
+    localStorage.setItem("status", todo.todostatus);
     navigate(`/todo/edit/${todoId}`);
   };
 
@@ -72,6 +84,7 @@ export default function ToDoDetails() {
         }
       );
 
+      
       if (response.ok) {
         navigate("/todos");
       } else {
@@ -83,17 +96,17 @@ export default function ToDoDetails() {
   };
 
   const handleBack = () => {
-    navigate('/todos');
-  }
+    navigate("/todos");
+  };
 
   return (
     <>
-      <h3>{todoheading}</h3>
-      <p>{tododescription}</p>
-      <p>{!todostatus ? "Active" : "Completed"}</p>
-      <p>{createdAt}</p>
-      <p>{createdBy}</p>
-      <p>{updatedAt}</p>
+      <h3>{todo.todoheading}</h3>
+      <p>{todo.tododescription}</p>
+      <p>{!todo.todostatus ? "Active" : "Completed"}</p>
+      <p>{todo.createdAt}</p>
+      <p>{todo.createdBy}</p>
+      <p>{todo.updatedAt}</p>
 
       <button onClick={handleEdit}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
