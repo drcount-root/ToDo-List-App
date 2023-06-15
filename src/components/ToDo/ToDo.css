@@ -1,0 +1,39 @@
+.todo_card {
+  background-color: #f0cbd9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 5%;
+  padding: 20px 25px 40px 25px;
+}
+
+.todo_card_title {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.todo_card_description {
+  margin-bottom: 5px;
+}
+
+.todo_card_status {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.todo_card_id {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.todo_card_date {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.todo_card_created_by {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
+}
