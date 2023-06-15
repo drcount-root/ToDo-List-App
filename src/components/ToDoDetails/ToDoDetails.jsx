@@ -6,7 +6,7 @@ export default function ToDoDetails() {
   const rendered = useRef(false);
   const params = useParams();
   const todoId = params.id;
-  // console.log(todoId);
+  console.log(todoId);
   const navigate = useNavigate();
   const tokenId = localStorage.getItem("tokenId");
   const [loading, setLoading] = useState(true);
