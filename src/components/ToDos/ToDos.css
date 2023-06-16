@@ -55,3 +55,13 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
 }
+
+.filter_container {
+  margin-left: auto;
+}
+
+.filter_select {
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
