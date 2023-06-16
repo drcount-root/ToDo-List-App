@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./SignUp.css";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ const SignUp = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        navigate("/login")
       } else {
         const errorData = await response.json();
         console.error("Signup failed:", errorData);
@@ -47,36 +50,53 @@ const SignUp = () => {
     margin: "1rem",
     textDecoration: "none",
     color: "white",
-    cursor: "pointer",padding: "10px 15px",
+    cursor: "pointer",
+    padding: "10px 25px",
     backgroundColor: "black",
-    borderRadius: "7px"
+    borderRadius: "7px",
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" style={linkStyle}>Signup</button>
-      </form>
-      <div>Already have an account?</div>
-      <Link to="/login" style={linkStyle}>Login</Link>
+      <div className="main_container">
+        <form onSubmit={handleSubmit} className="signup_form">
+          <h2>SignUp</h2>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" style={linkStyle}>
+            Signup
+          </button>
+          <div>
+            Already have an account?&nbsp;&nbsp;
+            <Link
+              to="/login"
+              style={{
+                marginBottom: "20px",
+                textDecoration: "none",
+                color: "blueviolet",
+              }}
+            >
+              Login
+            </Link>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

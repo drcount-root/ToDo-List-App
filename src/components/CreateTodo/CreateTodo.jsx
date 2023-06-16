@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./CreateTodo.css";
 
 export default function CreateTodo() {
   const [newTodo, setNewTodo] = useState({
@@ -29,7 +30,7 @@ export default function CreateTodo() {
       );
 
       if (!response.ok) {
-        throw new Error('Failed to add todo');
+        throw new Error("Failed to add todo");
       }
 
       if (response.ok) {
@@ -37,10 +38,10 @@ export default function CreateTodo() {
       } else {
         throw new Error("Failed to delete todo");
       }
-  
+
       const data = await response.json();
       console.log(data);
-      
+
       setNewTodo({
         name: "",
         description: "",
@@ -53,39 +54,59 @@ export default function CreateTodo() {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
+    const newValue = type === "checkbox" ? checked : value;
     setNewTodo({
       ...newTodo,
       [name]: newValue,
     });
   };
 
+  const handleBack = () => {
+    navigate(`/todos`);
+  };
+
   return (
     <>
-      <input
-        type="text"
-        name="name"
-        value={newTodo.name}
-        onChange={handleInputChange}
-        placeholder="Name"
-      />
-      <input
-        type="text"
-        name="description"
-        value={newTodo.description}
-        onChange={handleInputChange}
-        placeholder="Description"
-      />
-      <label>
-        Status:
-        <input
-          type="checkbox"
-          name="status"
-          checked={newTodo.status}
-          onChange={handleInputChange}
-        />
-      </label>
-      <button onClick={addTodo}>Add Todo</button>
+      <div className="main">
+        <div className="create_container">
+          <h2 className="heading">Add Todo</h2>
+          <input
+            className="input"
+            type="text"
+            name="name"
+            value={newTodo.name}
+            onChange={handleInputChange}
+            placeholder="Name"
+          />
+          <input
+            className="input"
+            type="text"
+            name="description"
+            value={newTodo.description}
+            onChange={handleInputChange}
+            placeholder="Description"
+          />
+          <label className="checkboxLabel">
+            Status:
+            <input
+              className="checkbox"
+              type="checkbox"
+              name="status"
+              checked={newTodo.status}
+              onChange={handleInputChange}
+            />
+          </label>
+
+          <div className="buttons">
+            <button className="button" onClick={addTodo}>
+              Add Todo
+            </button>
+            <button className="button" onClick={handleBack}>
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

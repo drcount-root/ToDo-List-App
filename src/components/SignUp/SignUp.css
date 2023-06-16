@@ -4,7 +4,7 @@
   margin-top: 10%;
 }
 
-.login_form {
+.signup_form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +16,7 @@
   border-radius: 7px;
 }
 
-.login_form input {
+.signup_form input {
   width: 60%;
   padding: 10px;
   margin-bottom: 0.5rem;
@@ -24,7 +24,7 @@
   border: 1px solid #ccc;
 }
 
-.login_form button {
+.signup_form button {
   padding: 10px 25px;
   background-color: black;
   color: white;
@@ -34,7 +34,7 @@
   transition: 0.3s;
 }
 
-.login_form button:hover {
+.signup_form button:hover {
   background-color: rgb(36, 36, 36);
 }
 
@@ -44,17 +44,12 @@
   margin-bottom: 0.2rem;
 }
 
-.error_message {
-  color: red;
-  margin-top: 10px;
-}
-
 @media (max-width: 768px) {
-  .login_form {
+  .signup_form {
     margin-top: 20%;
     width: 65%;
   }
-  .login_form input {
+  .signup_form input {
     width: 100%;
   }
 }

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ToDo from "../ToDo/ToDo";
 import "./ToDos.css";
 import loader from "../../assets/loader.gif";
@@ -10,6 +10,13 @@ export default function ToDos() {
   const [searchText, setSearchText] = useState("");
   const rendered = useRef(false);
   const tokenId = localStorage.getItem("tokenId");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!tokenId) {
+      navigate("/login");
+    }
+  }, [navigate, tokenId]);
 
   useEffect(() => {
     async function getAllTodos(tokenId) {
@@ -39,7 +46,7 @@ export default function ToDos() {
     return () => {
       rendered.current = true;
     };
-  }, []);
+  }, [tokenId]);
 
   const searchTodos = async () => {
     const response = await fetch(
@@ -67,41 +74,33 @@ export default function ToDos() {
   if (loading) {
     return (
       <div className="loading_container">
-        <img
-          src={loader}
-          className="loader"
-        />
+        <img src={loader} className="loader" alt="Loading" />
       </div>
     );
   }
 
-  const linkStyle = {
-    margin: "1rem",
-    textDecoration: "none",
-    color: "white",
-    cursor: "pointer",
-    padding: "10px 15px",
-    backgroundColor: "black",
-    borderRadius: "7px",
-  };
-
   return (
     <>
-      <Link to="/todos/create" style={linkStyle}>
-        Add Todo
-      </Link>
-      <div>
-        <input
-          type="text"
-          value={searchText}
-          onChange={handleSearchChange}
-          placeholder="Search todos..."
-        />
-        <button onClick={searchTodos}>Search</button>
-      </div>
-      <div>
-        {todos.map((todo) => {
-          return (
+      <div className="todos_container">
+        <div className="todos_top">
+          <Link to="/todos/create" className="add_todo_button">
+            Add Todo
+          </Link>
+          <div className="search_container">
+            <input
+              type="text"
+              value={searchText}
+              onChange={handleSearchChange}
+              placeholder="Search todos..."
+              className="search_input"
+            />
+            <button onClick={searchTodos} className="search_button">
+              Search
+            </button>
+          </div>
+        </div>
+        <div className="todos_grid">
+          {todos.map((todo) => (
             <div key={todo._id}>
               <ToDo
                 id={todo._id}
@@ -113,8 +112,8 @@ export default function ToDos() {
                 updatedAt={todo.updatedAt}
               />
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </>
   );
