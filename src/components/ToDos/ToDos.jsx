@@ -9,6 +9,8 @@ export default function ToDos() {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [filter, setFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const rendered = useRef(false);
   const tokenId = localStorage.getItem("tokenId");
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ export default function ToDos() {
       const data = await response.json();
       setTodos(data);
       setLoading(false);
+      setTotalPages(Math.ceil(data.length / 2));
     }
 
     if (!rendered.current) {
@@ -66,6 +69,8 @@ export default function ToDos() {
     );
     const data = await response.json();
     setTodos(data);
+    setTotalPages(Math.ceil(data.length / 2));
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (e) => {
@@ -86,6 +91,15 @@ export default function ToDos() {
         return todos;
     }
   };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const paginatedTodos = filterTodos().slice(
+    (currentPage - 1) * 2,
+    currentPage * 2
+  );
 
   if (loading) {
     return (
@@ -127,7 +141,7 @@ export default function ToDos() {
           </div>
         </div>
         <div className="todos_grid">
-          {filterTodos().map((todo) => (
+          {paginatedTodos.map((todo) => (
             <div key={todo._id}>
               <ToDo
                 id={todo._id}
@@ -140,6 +154,21 @@ export default function ToDos() {
               />
             </div>
           ))}
+        </div>
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            (page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`page_button ${
+                  page === currentPage ? "active" : ""
+                }`}
+              >
+                {page}
+              </button>
+            )
+          )}
         </div>
       </div>
     </>
@@ -227,9 +256,9 @@ export default function ToDos() {
 //   const filterTodos = () => {
 //     switch (filter) {
 //       case "active":
-//         return todos.filter((todo) => todo.status === false);
+//         return todos.filter((todo) => !todo.status);
 //       case "completed":
-//         return todos.filter((todo) => todo.status === true);
+//         return todos.filter((todo) => todo.status);
 //       default:
 //         return todos;
 //     }
@@ -262,17 +291,17 @@ export default function ToDos() {
 //               Search
 //             </button>
 //           </div>
-//         </div>
-//         <div className="filter_container">
-//           <select
-//             value={filter}
-//             onChange={handleFilterChange}
-//             className="filter_select"
-//           >
-//             <option value="all">All</option>
-//             <option value="active">Active</option>
-//             <option value="completed">Completed</option>
-//           </select>
+//           <div className="filter_container">
+//             <select
+//               value={filter}
+//               onChange={handleFilterChange}
+//               className="filter_select"
+//             >
+//               <option value="all">All</option>
+//               <option value="active">Active</option>
+//               <option value="completed">Completed</option>
+//             </select>
+//           </div>
 //         </div>
 //         <div className="todos_grid">
 //           {filterTodos().map((todo) => (
